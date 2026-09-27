@@ -9,7 +9,7 @@ ready: false
 
 # Reporter team authors
 authors:
-  - name: "Reporter Team (Student Names)"
+  - name: "Grace Bergquist, Daniel Evans, Jessi Morris, Atharva Tilak, Megan Vu"
 
 bibliography: 2026-09-21-foundation-models-for-language.bib
 
