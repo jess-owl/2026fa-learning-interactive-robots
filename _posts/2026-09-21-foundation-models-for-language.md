@@ -45,7 +45,7 @@ toc:
 
   ---
 
-## Aligning Large Language Models with Human Intent Using Reinforcement Learning with Human Feedback 
+## Aligning Large Language Models with Human Intent Using Reinforcement Learning with Human Feedback <d-cite key="ouyang_training_2022"></d-cite>
 
 There is a fundamental mismatch between the objective of large, commercial LLMs and their actual loss function: while their purpose is "to follow user instructions helpfully and safely," their loss function encourages successful predictions of the next token in a sequence, which may not always be the most helpful or safest response. While external methods like system prompts allow for some control over the behavior of LLMs, the foundational disagreement between the way they are trained and their intended use may still lead to incorrect, toxic, or unhelpful responses: this is called "misalignment." InstructGPT is the product of a collection of methods designed to align LLMs with user intent, such that their behavior is helpful, honest, and harmless. 
 
@@ -55,10 +55,10 @@ There is a fundamental mismatch between the objective of large, commercial LLMs 
 {% include figure.liquid 
    path="assets/img/2026-09-21-foundation-models-for-language/instruct-outline.png" 
    class="img-fluid rounded z-depth-1" 
-   caption="Figure alpha: The three steps of InstructGPT. Blue arrows indicate the flow of data used in training." 
+   caption="Figure 1: The three steps of InstructGPT. Blue arrows indicate the flow of data used in training." 
 %}
 
-The creators of InstructGPT followed three primary steps in its construction. These steps are illustrated in Figure alpha.
+The creators of InstructGPT followed three primary steps in its construction. These steps are illustrated in Figure 1.
 
 1. **Supervised Fine-Tuning (SFT):** Collect a new dataset of desired behavior labeled by humans. Fine-tune a pretrained LLM with supervised learning. InstructGPT fine-tunes a GPT-3 model.
 
@@ -87,7 +87,7 @@ Finally, InstructGPT is fine-tuned with reinforcement learning. In training, the
 {% include figure.liquid 
    path="assets/img/2026-09-21-foundation-models-for-language/instruct-results.png" 
    class="img-fluid rounded z-depth-1" 
-   caption="Figure beta: Preference results of InstructGPT varients compared against baselines." 
+   caption="Figure 2: Preference results of InstructGPT varients compared against baselines." 
 %}
 
 The authors evaluated InstructGPT using human preference on a held-out dataset of prompts. They compared their method to the following baselines:
@@ -108,7 +108,7 @@ The authors acknowledge that, while InstructGPT improves on base GPT-3, they sti
 
 ---
 
-## Voyager
+## Voyager <d-cite key="wang_voyager_2023"></d-cite>
 
 Voyager is the first LLM embodied lifelong learning agent, which is situated in the video game Minecraft and continuously explores, acquires skills, and makes discoveries without human intervention, using GPT-4 without any parameter tuning. 
 
@@ -181,14 +181,14 @@ Voyager consistently completes more tasks than any other baseline (evaluated aga
 
 **Q: How do the results of InstructGPT change when removing any of the three steps?**
 
-A: Because step three, proximal policy optimization, is predicated on step two, the reward model, those two steps must be considered together. In Figure [beta], it can be seen that GPT-3 with SFT alone improves significantly over the other baselines, but that InstructGPT with all three steps is by far the most preferred by human labelers. Clearly, steps two and three are important, if not necessary, for InstructGPT's success.  
+A: Because step three, proximal policy optimization, is predicated on step two, the reward model, those two steps must be considered together. In Figure 2, it can be seen that GPT-3 with SFT alone improves significantly over the other baselines, but that InstructGPT with all three steps is by far the most preferred by human labelers. Clearly, steps two and three are important, if not necessary, for InstructGPT's success.  
 
 However, the authors do not compare InstructGPT to a model trained with reinforcement learning but without SFT. Because RL is significantly cheaper (the response scoring is automated), it is worth asking how important the SFT step is in the first place, but the authors do not speak about this in their paper. 
 
 <br><br>
 
 ### Comparisons With Other Methods  
-
+sinfo -o "%.15P %.10a %.10l %.10D %.6c %.8m %.10T %N %E"
 
 **Q: What do the methods Voyager is compared against use for an LLM?** 
 
