@@ -46,6 +46,35 @@ toc:
   ---
 
 ## InstructGPT
+# Aligning Large Language Models with Human Intent Using Reinforcement Learning with Human Feedback 
+
+There is a fundamental mismatch between the objective of large, commercial LLMs and their actual loss function: while their purpose is "to follow user instructions helpfully and safely," their loss function encourages successful predictions of the next token in a sequence, which may not always be the most helpful or safest response. While external methods like system prompts allow for some control over the behavior of LLMs, the foundational disagreement between the way they are trained and their intended use may still lead to incorrect, toxic, or unhelpful responses: this is called "misalignment." InstructGPT is the product of a collection of methods designed to align LLMs with user intent, such that their behavior is helpful, honest, and harmless. 
+
+## Methods
+### Overview
+
+[REPLACE WITH METHOD FIGURE (fig. 2)]
+
+The creators of InstructGPT followed three primary steps in its construction. These steps are illustrated in [REPLACE WITH FIGURE REFERENCE].
+
+1. **Supervised Fine-Tuning (SFT):** Collect a new dataset of desired behavior labeled by humans. Fine-tune a pretrained LLM with supervised learning. InstructGPT fine-tunes a GPT-3 model.
+
+2. **Reward Model (RM):** Train a version of the fine-tuned model to predict the quality of a response. Responses in the training data are scored by human labelers.
+
+3. **Optimize with Proximal Policy Optimization (PPO):** Fine-tune the unaligned SFT model with reinforcement learning via the PPO algorithm, where the RM provides the reward which tunes the model.
+
+### Supervised Fine-Tuning
+InstructGPT began with a pretrained GPT-3 model that had been optimized for next-token prediction, thus remaining unaligned with user intent. The authors collected a new dataset of 13,000 training prompts annotated with appropriate responses by human labelers, and this data was used to perform SFT on the pretrained model. In order to keep the evaluation of this technique valid, the authors separated their labelers into testing and training groups; moreover, they surveyed inter-annotator agreement rates, finding that both training and testing labelers agreed with each other above 70% of the time. It should be noted that this is an expensive technique, as it requires a lot of time from humans.
+
+### Reward Model
+The reward model is a separate instance of GPT-3, fine-tuned with the dataset from step 1. It also includes an architectural change: instead of outputting a probability distribution across possible next tokens, the authors replace the output layer with a single scalar value. The output of the RM is a score indicating the alignment of the response with human intent. 
+
+In order to train the RM, an additional dataset is collected. This time, instead of having humans write their own responses, the authors generated 4-9 responses per prompt from the SFT model, then had a human rank those responses from best to worst. The RM is optimized with the following loss function:
+
+$$\text{loss}(\theta) = -\frac{1}{\binom{K}{2}} E_{(x, y_w, y_l) \sim D} \left[ \log \left( \sigma \left( r_\theta(x, y_w) - r_\theta(x, y_l) \right) \right) \right]$$
+
+where $r_\theta(x,y)$ is the output of the RM and $y_w$ is the better response between $y_w, y_l$, as ranked by labelers.
+
 
 ---
 
