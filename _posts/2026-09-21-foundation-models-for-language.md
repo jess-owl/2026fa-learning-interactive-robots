@@ -15,6 +15,25 @@ bibliography: 2026-09-21-foundation-models-for-language.bib
 
 toc:
   - name: "Introduction"
+  - name: "InstructGPT"
+    subsections:
+    - name: "Methods"
+    - name: "Overview"
+    - name: "Supervised Fine-Tuning"
+    - name: "Reward Model"
+    - name: "Proximal Policy Optimization"
+    - name: "Evaluation"
+    - name: "Limitations"
+  - name: "Voyager"
+    subsections:
+    - name: "Motivation"
+    - name: "Goal"
+    - name: "Implementation"
+    - name: "Methodology"
+    - name: "Results"
+    - name: "Ablation"
+    - name: "Takeaways"
+  - name: "Student Q&A"
 ---
 
 ## Introduction
@@ -45,7 +64,7 @@ toc:
 
   ---
 
-## Aligning Large Language Models with Human Intent Using Reinforcement Learning with Human Feedback <d-cite key="ouyang_training_2022"></d-cite>
+## Aligning Large Language Models with Human Intent Using Reinforcement Learning with Human Feedback <d-cite key="ouyang_training_2022"></d-cite> {#instructgpt}
 
 There is a fundamental mismatch between the objective of large, commercial LLMs and their actual loss function: while their purpose is "to follow user instructions helpfully and safely," their loss function encourages successful predictions of the next token in a sequence, which may not always be the most helpful or safest response. While external methods like system prompts allow for some control over the behavior of LLMs, the foundational disagreement between the way they are trained and their intended use may still lead to incorrect, toxic, or unhelpful responses: this is called "misalignment." InstructGPT is the product of a collection of methods designed to align LLMs with user intent, such that their behavior is helpful, honest, and harmless. 
 
@@ -82,7 +101,7 @@ where $r_\theta(x,y)$ is the output of the RM and $y_w$ is the better response b
 Finally, InstructGPT is fine-tuned with reinforcement learning. In training, the authors provide the SFT GPT-3 model with a prompt, score its response with the RM, and then use PPO to update the model's weights. However, this method risks teaching InstructGPT to leverage response patterns that don't fit natural language but do provide favorable rewards. To mitigate this, the authors apply an additional penalty based on the KL-divergence of the output of InstructGPT from the output of the original SFT model. 
 
 
-### Results
+### Evaluation
 
 {% include figure.liquid 
    path="assets/img/2026-09-21-foundation-models-for-language/instruct-results.png" 
@@ -175,7 +194,7 @@ Voyager consistently completes more tasks than any other baseline (evaluated aga
 
 ---
 
-## Student Q&A
+## Student Q&A {student-q-a}
 
 ### The Three Steps of InstructGPT 
 
